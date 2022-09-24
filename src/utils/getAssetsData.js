@@ -51,6 +51,9 @@ const menuIcon = require('../assets/icons/menu.png');
 const profileIcon = require('../assets/icons/profile.png');
 const settingsIcon = require('../assets/icons/settings.png');
 const polygonIcon = require('../assets/icons/polygon.png');
+const rankingIcon = require('../assets/icons/ranking.png');
+const activityIcon = require('../assets/icons/activity.png');
+const prismIcon = require('../assets/icons/prism.png');
 
 export {
   homeIcon,
@@ -62,4 +65,7 @@ export {
   profileIcon,
   settingsIcon,
   polygonIcon,
+  rankingIcon,
+  activityIcon,
+  prismIcon,
 };

@@ -39,3 +39,20 @@ export const getRandomNFTData = () => {
   console.log(dataArray);
   return dataArray;
 };
+
+const imagesList = getItemImages();
+
+export const getNftItemData = () => {
+  const newArr = imagesList.map((item, index) => {
+    return {
+      id: index,
+      srno: index + 1,
+      image: item,
+      amount: `${Math.floor(Math.random() * 100000 + 1).toFixed(2)}`,
+      percent: `${Math.floor(Math.random() * 100 + 1).toFixed(2)} %`,
+    };
+  });
+  return newArr;
+};
+
+export const NFT_ITEM_DATA = getNftItemData();

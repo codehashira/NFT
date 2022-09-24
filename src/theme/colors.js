@@ -15,6 +15,7 @@ const COLORS = {
   TITLE_GRAY: '#D7CCE3',
   NFT_ID_COLOR: 'rgba(235,235,245,0.6)',
   HEART_RED: '#FF3B30',
+  BOTTOMSHEET_HANDLER_INDICATOR: '#6F5A86',
 };
 
 export default COLORS;

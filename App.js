@@ -1,152 +1,38 @@
-import React from 'react';
-import {Image, ImageBackground} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import Home from './src/screens/Home';
+import {StatusBar, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import COLORS from './src/theme/colors';
-import {scale} from './src/theme/scaling';
+import Main from './src/screens/Main';
+import Stats from './src/screens/Stats';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-//icons
-import {
-  homeIcon,
-  homeFilledIcon,
-  searchIcon,
-  statsIcon,
-  addIcon,
-  menuIcon,
-  polygonIcon,
-} from './src/utils/getAssetsData';
-
-const ImageIcon = props => {
-  const {isActive, activeSource, inactiveSource} = props;
-  const source = isActive ? activeSource : inactiveSource;
-  console.log(source);
-  return (
-    <Image
-      source={source}
-      style={{width: 24, height: 24}}
-      resizeMode="contain"
-    />
-  );
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: COLORS.BACKGROUND_ONE,
+  },
 };
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        tabBarOptions={{
-          showLabel: false,
-        }}
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            height: scale(70),
-            backgroundColor: COLORS.BACKGROUND_ONE,
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30,
-            position: 'absolute',
-            bottom: 0,
-            // elevation: 3,
-          },
-        }}>
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => {
-              return (
-                <ImageIcon
-                  isActive={!focused}
-                  activeSource={homeIcon}
-                  inactiveSource={homeFilledIcon}
-                />
-              );
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Stats"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => {
-              return (
-                <ImageIcon
-                  isActive={!focused}
-                  activeSource={statsIcon}
-                  inactiveSource={null}
-                />
-              );
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Add"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => {
-              return (
-                <ImageIcon
-                  isActive={!focused}
-                  activeSource={addIcon}
-                  inactiveSource={null}
-                />
-              );
-            },
-            tabBarButton: props => {
-              return (
-                <ImageBackground
-                  source={polygonIcon}
-                  style={{
-                    height: 78,
-                    width: 78,
-                    borderRadius: 30,
-                    top: -20,
-                  }}
-                  resizeMode={'contain'}>
-                  {props.children}
-                </ImageBackground>
-              );
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Search"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => {
-              return (
-                <ImageIcon
-                  isActive={!focused}
-                  activeSource={searchIcon}
-                  inactiveSource={null}
-                />
-              );
-            },
-          }}
-        />
-        <Tab.Screen
-          name="Menu"
-          component={Home}
-          options={{
-            tabBarIcon: ({focused}) => {
-              return (
-                <ImageIcon
-                  isActive={!focused}
-                  activeSource={menuIcon}
-                  inactiveSource={null}
-                />
-              );
-            },
-          }}
-        />
-      </Tab.Navigator>
+    <NavigationContainer theme={MyTheme}>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <StatusBar translucent={true} backgroundColor="transparent" />
+        <Stack.Navigator
+          initialRouteName="Main"
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="Main" component={Main} />
+          <Stack.Screen name="Stats" component={Stats} />
+        </Stack.Navigator>
+      </GestureHandlerRootView>
     </NavigationContainer>
   );
 };
 
 export default App;
-
-// const styles = StyleSheet.create({});

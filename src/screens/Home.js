@@ -15,8 +15,10 @@ import {FONT_FAMILY} from '../theme/textStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import {MARGIN, PADDING} from '../theme/spacing';
 import Header from '../components/Header';
-import {height, scale, width} from '../theme/scaling';
+import {height, scale} from '../theme/scaling';
 import {getRandomNFTData} from '../utils/generateRandomNFTData';
+import NFTCard from '../components/NFTCard';
+import CategoryCard from '../components/CategoryCard';
 
 const genre_02 = require('../assets/images/genre_02.png');
 const genre_01 = require('../assets/images/genre_01.png');
@@ -31,7 +33,7 @@ const DATA = [
   {
     id: 1,
     image: genre_01,
-    title: 'Art',
+    title: 'Virtual Worlds',
   },
   {
     id: 2,
@@ -42,172 +44,32 @@ const DATA = [
 
 const NFTDATA = getRandomNFTData();
 
-// const NFTDATA = [
-//   {
-//     id: 0,
-//     nftCategory: 'Top seller',
-//     nftData: [
-//       {
-//         id: 0,
-//         image: genre_01,
-//         name: 'Wave',
-//         nftId: 'wav2 #5672',
-//         value: 0.018,
-//       },
-//       {
-//         id: 1,
-//         image: genre_02,
-//         name: 'Wave',
-//         nftId: 'wav2 #5672',
-//         value: 0.018,
-//       },
-//       {
-//         id: 2,
-//         image: genre_01,
-//         name: 'Wave',
-//         nftId: 'wav2 #5672',
-//         value: 0.018,
-//       },
-//     ],
-//   },
-//   {
-//     id: 0,
-//     nftCategory: 'Trending collections',
-//     nftData: [
-//       {
-//         id: 0,
-//         image: genre_01,
-//         name: 'Wave',
-//         nftId: 'wav2 #5672',
-//         value: 0.018,
-//       },
-//       {
-//         id: 1,
-//         image: genre_02,
-//         name: 'Wave',
-//         nftId: 'wav2 #5672',
-//         value: 0.018,
-//       },
-//       {
-//         id: 2,
-//         image: genre_01,
-//         name: 'Wave',
-//         nftId: 'wav2 #5672',
-//         value: 0.018,
-//       },
-//     ],
-//   },
-// ];
+const Home = ({navigation, route}) => {
+  const _renderItem = ({item}) => {
+    return <CategoryCard {...item} onPress={navigation.navigate} />;
+  };
 
-const CategoryCard = props => {
-  const {image, title} = props;
-  return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      style={{flex: 1, width: scale(width * 0.65), marginRight: MARGIN.SM}}>
-      <ImageBackground
-        source={image}
-        style={{width: '100%', height: '100%'}}
-        borderRadius={30}>
-        <Text
-          mode={'titleLarge'}
-          style={{
-            textAlign: 'center',
-            position: 'absolute',
-            bottom: 10,
-            left: 0,
-            right: 0,
-            color: 'white',
-          }}>
-          {title}
-        </Text>
-      </ImageBackground>
-    </TouchableOpacity>
-  );
-};
-
-import OctiIcon from 'react-native-vector-icons/Octicons';
-import IconButton from '../components/IconButton';
-
-const NFTCard = props => {
-  const [loved, setLoved] = useState(false);
-  const {image, name, nftId, value} = props;
-  return (
-    <View
-      style={{
-        width: scale(width * 0.42),
-        height: scale(height * 0.32),
-        backgroundColor: 'rgba(255,255,255,0.1)',
-        padding: PADDING.SM,
-        marginRight: MARGIN.SM,
-        borderRadius: 30,
-      }}>
-      <Image
-        source={image}
-        style={{flex: 1, width: '100%', marginBottom: MARGIN.SM}}
-        borderRadius={30}
-      />
-      <View>
-        <Text mode={'titleSmall'} style={{color: COLORS.WHITE}}>
-          {name}
-        </Text>
-        <Text mode={'labelMedium'} style={{color: COLORS.NFT_ID_COLOR}}>
-          {nftId}
-        </Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginVertical: MARGIN.SM,
-        }}>
-        <Text mode={'titleSmall'} style={{color: COLORS.WHITE}}>
-          {value}
-        </Text>
-        <IconButton
-          onPress={() => {
-            setLoved(!loved);
-          }}
-          icon={
-            <OctiIcon
-              name={loved ? 'heart-fill' : 'heart'}
-              size={12}
-              color={loved ? COLORS.HEART_RED : COLORS.NFT_ID_COLOR}
-            />
-          }
-        />
-      </View>
-    </View>
-  );
-};
-
-const _renderItem = ({item}) => {
-  return <CategoryCard image={item.image} title={item.title} />;
-};
-
-const _renderNftItem = ({item}) => {
-  return <NFTCard {...item} />;
-};
-
-const Home = () => {
-  useEffect(() => {
-    StatusBar.setTranslucent(false);
-    StatusBar.setBackgroundColor(COLORS.BACKGROUND_ONE);
-  }, []);
+  const _renderNftItem = ({item}) => {
+    return <NFTCard {...item} onPress={navigation.navigate} />;
+  };
 
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: COLORS.BACKGROUND_ONE,
-        padding: PADDING.RG,
       }}>
-      <Header style={{flex: 0.1}} title="NFT Marketplace" />
+      <Header
+        style={{flex: 0.1}}
+        title="NFT Marketplace"
+        shouldShowIcon={true}
+        onBackPress={navigation.goBack}
+      />
       <FlatList
         style={{
           flex: 0.9,
           marginVertical: MARGIN.SM - 10,
+          paddingHorizontal: PADDING.RG,
         }}
         data={[]}
         ListHeaderComponent={() => {

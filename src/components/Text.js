@@ -25,7 +25,7 @@ const Text = props => {
   return (
     <NativeText
       style={[
-        {color: 'black'},
+        {color: 'white'},
         textStyle[modeMap[mode ?? 'bodySmall']],
         style,
       ]}>
