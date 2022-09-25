@@ -7,8 +7,8 @@ const BlurSurface = props => {
   return (
     <BlurView
       blurType={'light'}
-      blurAmount={2}
-      blurRadius={10}
+      blurAmount={1}
+      blurRadius={2}
       style={[styles.blurView, style]}>
       {children}
     </BlurView>
@@ -19,10 +19,7 @@ export default BlurSurface;
 
 const styles = StyleSheet.create({
   blurView: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    flex: 1,
+    borderRadius: 30,
   },
 });

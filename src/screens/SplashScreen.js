@@ -1,14 +1,15 @@
 import {View, ImageBackground} from 'react-native';
 import React from 'react';
-import Text from './src/components/Text';
-import GradientBlurSurface from './src/components/BlurSurface';
-import {FONT_FAMILY} from './src/theme/textStyles';
-import {MARGIN, PADDING} from './src/theme/spacing';
-import COLORS from './src/theme/colors';
-import Button from './src/components/Button';
-const background = require('./src/assets/images/background.png');
+import Text from '../components/Text';
+import GradientBlurSurface from '../components/BlurSurface';
+import {FONT_FAMILY} from '../theme/textStyles';
+import {MARGIN, PADDING} from '../theme/spacing';
+import COLORS from '../theme/colors';
+import Button from '../components/Button';
+import {height, scale} from '../theme/scaling';
+const background = require('../assets/images/background.png');
 
-const SplashScreen = () => {
+const SplashScreen = ({navigation, route}) => {
   return (
     <ImageBackground
       source={background}
@@ -22,7 +23,15 @@ const SplashScreen = () => {
           padding: PADDING.MD,
           backgroundColor: 'rgba(255,255,255,0.1)',
         }}>
-        <View style={{flex: 0.55, marginBottom: MARGIN.MD + 30}}>
+        <View
+          style={{
+            height: scale(height * 0.45),
+            position: 'absolute',
+            bottom: 60,
+            left: 0,
+            right: 0,
+            padding: PADDING.MD,
+          }}>
           <Text
             mode={'displaySmall'}
             style={{
@@ -39,32 +48,50 @@ const SplashScreen = () => {
           <GradientBlurSurface>
             <View
               style={{
-                flex: 0.8,
+                flex: 1,
                 padding: PADDING.LG,
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
+                justifyContent: 'space-between',
+                backgroundColor: 'rgba(72,61,112,0.2)',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderRadius: 30,
+                borderWidth: 1,
               }}>
-              <Text
-                mode={'headlineSmall'}
+              <View
                 style={{
-                  fontFamily: FONT_FAMILY.BOLD,
-                  textShadowColor: 'rgba(0, 0, 0, 0.12)',
-                  textShadowOffset: {width: 4, height: 4},
-                  textShadowRadius: 10,
-                  color: 'white',
+                  flex: 0.6,
+                  alignItems: 'center',
+                  backgroundColor: 'Red',
                 }}>
-                Explore and Mint NFTs
-              </Text>
-              <Text
-                mode={'bodySmall'}
-                style={{color: COLORS.GREY, textAlign: 'center'}}>
-                You can buy and sell the NFTs of the best {'\n'}artists in the
-                world.{' '}
-              </Text>
+                <Text
+                  mode={'headlineSmall'}
+                  style={{
+                    fontFamily: FONT_FAMILY.BOLD,
+                    textShadowColor: 'rgba(0, 0, 0, 0.12)',
+                    textShadowOffset: {width: 4, height: 4},
+                    textShadowRadius: 10,
+                    color: 'white',
+                  }}>
+                  Explore and Mint NFTs
+                </Text>
+                <Text
+                  mode={'bodySmall'}
+                  style={{color: COLORS.GREY, textAlign: 'center'}}>
+                  You can buy and sell the NFTs of the best {'\n'}artists in the
+                  world.{' '}
+                </Text>
+              </View>
+              <View>
+                <Button
+                  style={{
+                    marginHorizontal: MARGIN.XL + 20,
+                  }}
+                  onPress={() => {
+                    navigation.navigate('Main');
+                  }}>
+                  Get started now
+                </Button>
+              </View>
             </View>
-            <Button style={{marginHorizontal: MARGIN.XL + 20}}>
-              Get started now
-            </Button>
           </GradientBlurSurface>
         </View>
       </View>

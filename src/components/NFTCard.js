@@ -9,6 +9,13 @@ import COLORS from '../theme/colors';
 const NFTCard = props => {
   const [loved, setLoved] = useState(false);
   const {image, name, nftId, value} = props;
+  const isSpaceSeparated = name.trim().includes(' ');
+  console.log(
+    '[Info] . NFTCard . name - ',
+    name,
+    ' isSpaceSeparated - ',
+    isSpaceSeparated,
+  );
   return (
     <View
       style={{
@@ -18,6 +25,8 @@ const NFTCard = props => {
         padding: PADDING.SM,
         marginRight: MARGIN.SM,
         borderRadius: 30,
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.2)',
       }}>
       <Image
         source={image}
@@ -25,12 +34,27 @@ const NFTCard = props => {
         borderRadius={30}
       />
       <View>
-        <Text mode={'titleSmall'} style={{color: COLORS.WHITE}}>
-          {name}
-        </Text>
-        <Text mode={'labelMedium'} style={{color: COLORS.NFT_ID_COLOR}}>
-          {nftId}
-        </Text>
+        {isSpaceSeparated ? (
+          <Text mode={'bodySmall'} style={{color: COLORS.WHITE}}>
+            {name}
+          </Text>
+        ) : (
+          <Text mode={'titleSmall'} style={{color: COLORS.WHITE}}>
+            {name}
+          </Text>
+        )}
+
+        {isSpaceSeparated ? (
+          <Text
+            mode={'bodySmall'}
+            style={{color: COLORS.NFT_ID_COLOR, fontSize: 12}}>
+            {nftId}
+          </Text>
+        ) : (
+          <Text mode={'labelMedium'} style={{color: COLORS.NFT_ID_COLOR}}>
+            {nftId}
+          </Text>
+        )}
       </View>
       <View
         style={{

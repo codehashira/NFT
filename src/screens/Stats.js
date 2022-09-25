@@ -1,7 +1,7 @@
-import {View, ImageBackground, Image} from 'react-native';
-import React from 'react';
+import {View, ImageBackground, Image, BackHandler} from 'react-native';
+import React, {useState} from 'react';
 import Header from '../components/Header';
-import {PADDING} from '../theme/spacing';
+import {MARGIN, PADDING} from '../theme/spacing';
 import COLORS from '../theme/colors';
 import BottomSheet from '../components/BottomSheet';
 import Text from '../components/Text';
@@ -9,8 +9,9 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {scale, width} from '../theme/scaling';
 import StatsRanking from './subscreens/StatsRanking';
 import StatsActivity from './subscreens/StatsActivity';
-
-import {rankingIcon, activityIcon, getItemImages} from '../utils/getAssetsData';
+import GlowSurface from '../components/GlowSurface';
+import {rankingIcon, activityIcon, menuIcon} from '../utils/getAssetsData';
+import LinearGradient from 'react-native-linear-gradient';
 
 const ImageIcon = ({source, style}) => {
   return (
@@ -36,14 +37,6 @@ const BottomSheetView = () => {
         tabBarLabelStyle: {
           color: 'white',
         },
-        tabBarIndicatorStyle: {
-          backgroundColor: '#97A9F7',
-          height: 5,
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
-          shadowColor: 'red',
-          elevation: 2,
-        },
         tabBarItemStyle: {
           flexDirection: 'row',
         },
@@ -53,6 +46,29 @@ const BottomSheetView = () => {
         component={StatsRanking}
         options={{
           tabBarIcon: () => <ImageIcon source={rankingIcon} />,
+          tabBarIndicator: () => (
+            <GlowSurface
+              style={{
+                width: '55%',
+                height: 15,
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '98%',
+                  height: 5,
+                  backgroundColor: COLORS.TOP_TAB_BAR_INDICATOR,
+                  borderTopLeftRadius: 30,
+                  borderTopRightRadius: 30,
+                }}></View>
+            </GlowSurface>
+          ),
         }}
       />
       <TopTab.Screen
@@ -60,6 +76,29 @@ const BottomSheetView = () => {
         component={StatsActivity}
         options={{
           tabBarIcon: () => <ImageIcon source={activityIcon} />,
+          tabBarIndicator: () => (
+            <GlowSurface
+              style={{
+                width: '55%',
+                height: 15,
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  width: '98%',
+                  height: 5,
+                  backgroundColor: COLORS.TOP_TAB_BAR_INDICATOR,
+                  borderTopLeftRadius: 30,
+                  borderTopRightRadius: 30,
+                }}></View>
+            </GlowSurface>
+          ),
         }}
       />
     </TopTab.Navigator>
@@ -67,9 +106,29 @@ const BottomSheetView = () => {
 };
 
 const Stats = ({navigation, route}) => {
+  const [isReady, setIsReady] = useState(false);
   const {image, title} = route.params;
 
   const spaceSeparetedTitle = title.replace(' ', '\n');
+
+  useState(() => {
+    // Disable Hardware Back Navigation
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true,
+    );
+
+    setTimeout(() => {
+      setIsReady(true);
+    }, 1);
+
+    return () => backHandler.remove();
+  });
+
+  if (!isReady)
+    return (
+      <View style={{flex: 1, backgroundColor: COLORS.BACKGROUND_ONE}}></View>
+    );
 
   return (
     <View
@@ -81,7 +140,9 @@ const Stats = ({navigation, route}) => {
       <Header
         style={{flex: 0.05}}
         title={'Stats'}
-        shouldShowIcon={false}
+        backIconvisible={true}
+        shouldShowIcon={true}
+        headerIcon={<ImageIcon source={menuIcon} />}
         onBackPress={navigation.goBack}
       />
       <View style={{flex: 0.95}}>
@@ -93,16 +154,24 @@ const Stats = ({navigation, route}) => {
             width: '100%',
           }}
           resizeMode={'cover'}>
-          <Text
-            mode="displayMedium"
-            style={{
-              color: 'white',
-              position: 'absolute',
-              bottom: 10,
-              left: 10,
-            }}>
-            {spaceSeparetedTitle}
-          </Text>
+          <LinearGradient
+            colors={['rgba(0,0,0,0.6)', 'transparent']}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            useAngle
+            angle={0}
+            style={{width: '100%', position: 'absolute', left: 0, bottom: 0}}>
+            <Text
+              mode="displayMedium"
+              style={{
+                color: 'white',
+                marginLeft: MARGIN.RG,
+                marginBottom: MARGIN.XS,
+                fontWeight: '700',
+              }}>
+              {spaceSeparetedTitle}
+            </Text>
+          </LinearGradient>
         </ImageBackground>
         <BottomSheet>
           <BottomSheetView />

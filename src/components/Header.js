@@ -1,16 +1,23 @@
 import {View, Image, StatusBar} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Text from './Text';
 import COLORS from '../theme/colors';
 import {scale} from '../theme/scaling';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import {MARGIN, PADDING} from '../theme/spacing';
-
-const HomeHeaderAvatar = require('../assets/images/avatar.png');
+import GradientText from './GradientText';
+import {FONT_FAMILY} from '../theme/textStyles';
 
 const Header = props => {
-  const {title, style, headerIcon, shouldShowIcon, backIcon, onBackPress} =
-    props;
+  const [hideHeaderTitle, setHideHeaderTitle] = useState(false);
+  const {
+    title,
+    style,
+    headerIcon,
+    shouldShowIcon,
+    backIconvisible,
+    onBackPress,
+  } = props;
   return (
     <View
       style={[
@@ -23,23 +30,38 @@ const Header = props => {
         },
         style,
       ]}>
-      <View style={{flexDirection: 'row'}}>
-        <MIcon
-          onPress={() => {
-            onBackPress();
-          }}
-          name="arrow-back"
-          size={24}
-          color={'white'}
-          style={{marginRight: 10}}
-        />
-        <Text mode={'headlineSmall'} style={{color: 'white'}}>
-          {title ?? ''}
-        </Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        {backIconvisible && (
+          <MIcon
+            onPress={() => {
+              setHideHeaderTitle(true);
+              setTimeout(() => {
+                onBackPress();
+              }, 0);
+            }}
+            name="arrow-back"
+            size={24}
+            color={COLORS.GREY}
+            style={{marginRight: 10}}
+          />
+        )}
+        {!hideHeaderTitle &&
+          (title === 'NFT Marketplace' ? (
+            <GradientText
+              colors={['#DAD6DC', '#8D8496']}
+              style={{fontFamily: FONT_FAMILY.BLACK, fontSize: 24}}>
+              {title}
+            </GradientText>
+          ) : (
+            <GradientText
+              colors={['#DAD6DC', '#8D8496']}
+              style={{fontFamily: FONT_FAMILY.REGULAR, fontSize: 21}}>
+              {title.toUpperCase()}
+            </GradientText>
+          ))}
       </View>
-      {shouldShowIcon && (
-        <Image source={HomeHeaderAvatar} style={{height: 39, width: 39}} />
-      )}
+
+      {shouldShowIcon && headerIcon}
     </View>
   );
 };

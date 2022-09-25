@@ -1,4 +1,4 @@
-import {View, Image} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import COLORS from '../theme/colors';
 import Text from '../components/Text';
@@ -31,9 +31,7 @@ const NFTDataItem = ({srno, image, name, amount, percent}) => {
         alignItems: 'center',
         marginHorizontal: 15,
       }}>
-      <Text
-        mode="labelMedium"
-        style={{flex: 0.05, color: 'white', marginRight: 5}}>
+      <Text mode="labelMedium" style={{flex: 0.1, color: 'white'}}>
         {srno ?? 1}
       </Text>
       <Image
@@ -71,7 +69,9 @@ const NFTDataItem = ({srno, image, name, amount, percent}) => {
         <View style={{margin: 5}}></View>
         {/* Divider */}
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Text mode="bodySmall">view info</Text>
+          <TouchableOpacity activeOpacity={0.6}>
+            <Text mode="bodySmall">view info</Text>
+          </TouchableOpacity>
           <Text
             mode="labelMedium"
             style={

@@ -5,6 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from './Home';
 import COLORS from '../theme/colors';
 import {scale} from '../theme/scaling';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,11 +45,12 @@ const Main = () => {
         tabBarStyle: {
           height: scale(70),
           backgroundColor: COLORS.BACKGROUND_ONE,
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: 'rgba(255,255,255,0.1)',
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           position: 'absolute',
-          elevation: 0,
+          elevation: 4,
         },
       }}>
       <Tab.Screen
@@ -75,7 +77,7 @@ const Main = () => {
               <ImageIcon
                 isActive={!focused}
                 activeSource={statsIcon}
-                inactiveSource={null}
+                inactiveSource={statsIcon}
               />
             );
           },
@@ -90,7 +92,7 @@ const Main = () => {
               <ImageIcon
                 isActive={!focused}
                 activeSource={addIcon}
-                inactiveSource={null}
+                inactiveSource={addIcon}
               />
             );
           },
@@ -98,25 +100,18 @@ const Main = () => {
             return (
               <View
                 style={{
-                  height: 78,
-                  width: 78,
-                  top: -39,
-                  borderRadius: 30,
-                  backgroundColor: 'purple',
+                  top: -30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
-                {props.children}
+                <MCIcon name="hexagon" size={78} color={'#4D405C'} />
+                <MCIcon
+                  name="plus"
+                  size={36}
+                  color={'white'}
+                  style={{position: 'absolute', top: 22}}
+                />
               </View>
-              // <ImageBackground
-              //   source={polygonIcon}
-              //   style={{
-              //     height: 78,
-              //     width: 78,
-              //     borderRadius: 30,
-              //     top: -20,
-              //   }}
-              //   resizeMode={'contain'}>
-              //   {props.children}
-              // </ImageBackground>
             );
           },
         }}
@@ -130,7 +125,7 @@ const Main = () => {
               <ImageIcon
                 isActive={!focused}
                 activeSource={searchIcon}
-                inactiveSource={null}
+                inactiveSource={searchIcon}
               />
             );
           },
@@ -145,7 +140,7 @@ const Main = () => {
               <ImageIcon
                 isActive={!focused}
                 activeSource={menuIcon}
-                inactiveSource={null}
+                inactiveSource={menuIcon}
               />
             );
           },
