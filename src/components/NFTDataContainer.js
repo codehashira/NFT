@@ -12,7 +12,7 @@ const ImageIcon = ({source, style}) => {
     <Image
       source={source}
       style={[{width: 24, height: 24}, style]}
-      resizeMode="contain"
+      resizeMode="cover"
     />
   );
 };
